@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -39,7 +40,7 @@ public class User {
     private String otp;
 
     @Column(name = "otp_expiry")
-    private Instant otpExpiry;
+    private LocalDateTime otpExpiry;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at", insertable = false, updatable = false)

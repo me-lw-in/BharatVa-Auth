@@ -1,0 +1,2 @@
+ALTER TABLE users
+MODIFY COLUMN otp_expiry DATETIME NULL;
