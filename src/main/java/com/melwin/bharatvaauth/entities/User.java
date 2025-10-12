@@ -1,5 +1,6 @@
 package com.melwin.bharatvaauth.entities;
 
+import com.melwin.bharatvaauth.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,6 +42,10 @@ public class User {
 
     @Column(name = "otp_expiry")
     private LocalDateTime otpExpiry;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false, insertable = false)
+    private UserStatus status;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at", insertable = false, updatable = false)
