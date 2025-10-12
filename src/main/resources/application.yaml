@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: BharatVa-Auth
+  datasource:
+    url: jdbc:mysql://localhost:3306/bharat_va_auth?createDatabaseIfNotExist=true
+    username: root
+    password: admin
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  jackson:
+    time-zone: UTC
