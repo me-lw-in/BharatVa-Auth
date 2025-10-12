@@ -7,17 +7,20 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 
 @Service
 @AllArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final MailService mailService;
 
     @Transactional
     public Boolean createUser(UserRegisterDto userRegisterDto){
         if (
-                userRepository.existsByEmail(userRegisterDto.getEmail().trim()) &&
-                        userRepository.existsByUsername(userRegisterDto.getUserName().trim()) &&
+                userRepository.existsByEmail(userRegisterDto.getEmail().trim()) ||
+                        userRepository.existsByUsername(userRegisterDto.getUserName().trim()) ||
                         userRepository.existsByPhoneNumber(userRegisterDto.getPhoneNumber().trim())
         ){
             return false;
@@ -28,6 +31,9 @@ public class UserService {
             newUser.setEmail(userRegisterDto.getEmail().trim());
             newUser.setPhoneNumber(userRegisterDto.getPhoneNumber().trim());
             newUser.setPasswordHash(userRegisterDto.getPassword().trim());
+            String otp = mailService.sendOtpToMail(userRegisterDto.getEmail().trim());
+            newUser.setOtp(otp);
+            newUser.setOtpExpiry(LocalDateTime.now().plusMinutes(5));
             userRepository.save(newUser);
             return true;
         }
